@@ -11,6 +11,8 @@ module.exports = {
     executableName: 'ERWT Boilerplate',
     // Set application copyright
     appCopyright: 'Copyright (C) 2021 Codesbiome, Guasam',
+    // Set application icon
+    icon: path.resolve('assets/images/appIcon.ico')
   },
   // Forge Makers
   makers: [
@@ -50,7 +52,7 @@ module.exports = {
       '@electron-forge/plugin-webpack',
       {
         // fix content-security-policy error when image or video src isn't same origin
-        devContentSecurityPolicy: '',
+        devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data:; script-src 'self' 'unsafe-eval' 'unsafe-inline' data:`,
         // Ports
         port: 3000, // Webpack Dev Server port
         loggerPort: 9000, // Logger port
