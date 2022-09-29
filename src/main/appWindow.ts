@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import path from 'path';
 import { registerTitlebarIpc } from '@misc/window/titlebarIPC';
 
@@ -7,6 +7,40 @@ declare const APP_WINDOW_WEBPACK_ENTRY: string;
 declare const APP_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 let appWindow: BrowserWindow;
+
+
+// if (process.defaultApp) {
+//   if (process.argv.length >= 2) {
+//     app.setAsDefaultProtocolClient('electron-fiddle', process.execPath, [path.resolve(process.argv[1])])
+//   }
+// } else {
+//   app.setAsDefaultProtocolClient('electron-fiddle')
+// }
+
+// const gotTheLock = app.requestSingleInstanceLock()
+
+// if (!gotTheLock) {
+//   app.quit()
+// } else {
+//   app.on('second-instance', (event, commandLine, workingDirectory) => {
+//     // Someone tried to run a second instance, we should focus our window.
+//     if (appWindow) {
+//       if (appWindow.isMinimized()) appWindow.restore()
+//       appWindow.focus()
+//     }
+//   })
+
+//   // Create appWindow, load the rest of the app, etc...
+//   app.whenReady().then(() => {
+//     createAppWindow()
+//   })
+  // appWindow.on('ready-to-show', () => appWindow.show());
+
+
+  // app.on('open-url', (event, url) => {
+  //   dialog.showErrorBox('Welcome Back', `You arrived from: ${url}`)
+  // })
+// }
 
 /**
  * Create Application Window
@@ -46,6 +80,14 @@ export function createAppWindow(): BrowserWindow {
     appWindow = null;
     app.quit();
   });
+
+
+  // Handle window controls via IPC
+  // ipcMain.on('shell:open', () => {
+  //   const pageDirectory = __dirname.replace('app.asar', 'app.asar.unpacked')
+  //   const pagePath = path.join('file://', pageDirectory, 'index.html')
+  //   shell.openExternal(pagePath)
+  // })
 
   return appWindow;
 }
